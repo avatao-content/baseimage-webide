@@ -1,0 +1,330 @@
+diff -ruN ./codiad/common.php ./patched/common.php
+--- ./codiad/common.php	2016-04-25 09:33:19.317030000 +0200
++++ ./patched/common.php	2016-04-18 16:42:19.769638000 +0200
+@@ -83,7 +83,7 @@
+             }
+ 
+             //Set a Session Name
+-            session_name(md5(BASE_PATH));
++            session_name(md5("avatao"));
+ 
+             session_start();
+             
+diff -ruN ./codiad/components/editor/init.js ./patched/components/editor/init.js
+--- ./codiad/components/editor/init.js	2016-04-25 09:33:19.393030000 +0200
++++ ./patched/components/editor/init.js	2016-04-18 15:58:52.741570000 +0200
+@@ -386,7 +386,7 @@
+ 
+         // Settings for Editor instances
+         settings: {
+-            theme: 'twilight',
++            theme: 'chaos',
+             fontSize: '13px',
+             printMargin: false,
+             highlightLine: true,
+diff -ruN ./codiad/components/right_bar.json ./patched/components/right_bar.json
+--- ./codiad/components/right_bar.json	2016-04-25 09:33:19.397030000 +0200
++++ ./patched/components/right_bar.json	2016-04-25 09:21:35.765012447 +0200
+@@ -12,87 +12,9 @@
+         "onclick": "codiad.active.saveAll();"
+     },
+     {
+-        "title": "Plugins",
+-        "admin": false,
+-        "icon": null,
+-        "onclick": null
+-    },
+-    {
+-        "title": "pluginbar",
+-        "admin": false,
+-        "icon": null,
+-        "onclick": null
+-    },
+-    {
+-        "title": "Administration",
+-        "admin": true,
+-        "icon": null,
+-        "onclick": null
+-    },
+-    {
+-        "title": "Projects",
+-        "admin": true,
+-        "icon": "icon-archive",
+-        "onclick": "codiad.project.list();"
+-    },
+-    {
+-        "title": "Users",
+-        "admin": true,
+-        "icon": "icon-users",
+-        "onclick": "codiad.user.list();"
+-    },
+-    {
+-        "title": "System",
+-        "admin": true,
+-        "icon": null,
+-        "onclick": null
+-    },
+-    {
+-        "title": "Marketplace",
+-        "admin": true,
+-        "icon": "icon-cloud",
+-        "onclick": "codiad.market.list();"
+-    },
+-    {
+-        "title": "Update Check",
+-        "admin": true,
+-        "icon": "icon-share",
+-        "onclick": "codiad.update.check();"
+-    },
+-    {
+-        "title": "Account",
+-        "admin": false,
+-        "icon": null,
+-        "onclick": null
+-    },
+-    {
+         "title": "Settings",
+         "admin": false,
+         "icon": "icon-doc-text",
+         "onclick": "codiad.settings.show();"
+-    },
+-    {
+-        "title": "Password",
+-        "admin": false,
+-        "icon": "icon-flashlight",
+-        "onclick": "codiad.user.password();"
+-    },
+-    {
+-        "title": "break",
+-        "admin": false,
+-        "icon": null,
+-        "onclick": null
+-    },
+-    {
+-        "title": "Help",
+-        "admin": false,
+-        "icon": "icon-help",
+-        "onclick": "window.open('https://github.com/Codiad/Codiad/wiki');"
+-    },
+-    {
+-        "title": "Logout",
+-        "admin": false,
+-        "icon": "icon-logout",
+-        "onclick": "codiad.user.logout();"
+     }
+ ]
+diff -ruN ./codiad/components/settings/settings.editor.php ./patched/components/settings/settings.editor.php
+--- ./codiad/components/settings/settings.editor.php	2016-04-25 09:33:19.401030000 +0200
++++ ./patched/components/settings/settings.editor.php	2016-04-18 16:10:27.173588000 +0200
+@@ -12,7 +12,7 @@
+         
+         <select class="setting" data-setting="codiad.editor.theme">
+ 			<option value="ambiance">Ambiance</option>
+-            <option value="chaos">Chaos</option>
++            <option value="chaos" selected>Chaos</option>
+ 			<option value="chrome">Chrome</option>
+             <option value="clouds">Clouds</option>
+             <option value="clouds_midnight">Clouds - Midnight</option>
+@@ -42,7 +42,7 @@
+             <option value="tomorrow_night_blue">Tomorrow Night Blue</option>
+             <option value="tomorrow_night_bright">Tomorrow Night Bright</option>
+             <option value="tomorrow_night_eighties">Tomorrow Night Eighties</option>
+-            <option value="twilight" selected>Twilight</option>
++            <option value="twilight">Twilight</option>
+             <option value="vibrant_ink">Vibrant Ink</option>
+ 			<option value="xcode">XCode</option>
+         </select>
+diff -ruN ./codiad/components/user/class.user.php ./patched/components/user/class.user.php
+--- ./codiad/components/user/class.user.php	2016-04-25 09:33:19.401030000 +0200
++++ ./patched/components/user/class.user.php	2016-04-21 11:32:16.177613000 +0200
+@@ -55,7 +55,7 @@
+             }
+         }
+ 
+-        if($pass){ echo formatJSEND("success",array("username"=>$this->username)); }
++        if($pass){ }
+         else{ echo formatJSEND("error","Incorrect Username or Password"); }
+     }
+ 
+diff -ruN ./codiad/components/user/controller.php ./patched/components/user/controller.php
+--- ./codiad/components/user/controller.php	2016-04-25 09:33:19.401030000 +0200
++++ ./patched/components/user/controller.php	2016-04-18 16:18:26.053601000 +0200
+@@ -26,12 +26,9 @@
+     //////////////////////////////////////////////////////////////////
+ 
+     if($_GET['action']=='authenticate'){
+-    	if(!isset($_POST['username']) || !isset($_POST['password'])){
+-    		die(formatJSEND("error","Missing username or password"));
+-    	}
+     	
+-        $User->username = $_POST['username'];
+-        $User->password = $_POST['password'];
++        $User->username = 'user';
++        $User->password = '12345';
+ 
+         // check if the asked languages exist and is registered in languages/code.php
+         require_once '../../languages/code.php';
+diff -ruN ./codiad/components/user/init.js ./patched/components/user/init.js
+--- ./codiad/components/user/init.js	2016-04-25 09:33:19.401030000 +0200
++++ ./patched/components/user/init.js	2016-04-18 17:31:29.073716000 +0200
+@@ -72,6 +72,7 @@
+             });
+         },
+ 
++
+         //////////////////////////////////////////////////////////////////
+         // Logout
+         //////////////////////////////////////////////////////////////////
+diff -ruN ./codiad/config.php ./patched/config.php
+--- ./codiad/config.php	1970-01-01 01:00:00.000000000 +0100
++++ ./patched/config.php	2016-04-21 14:55:48.082760000 +0200
+@@ -0,0 +1,54 @@
++<?php
++
++/*
++*  Copyright (c) Codiad & Kent Safranski (codiad.com), distributed
++*  as-is and without warranty under the MIT License. See
++*  [root]/license.txt for more. This information must remain intact.
++*/
++
++//////////////////////////////////////////////////////////////////
++// CONFIG
++//////////////////////////////////////////////////////////////////
++
++// PATH TO CODIAD
++define("BASE_PATH", "/var/www/codiad");
++
++// BASE URL TO CODIAD (without trailing slash)
++define("BASE_URL", "localhost:8888");
++
++// THEME : default, modern or clear (look at /themes)
++define("THEME", "default");
++
++// ABSOLUTE PATH
++define("WHITEPATHS", BASE_PATH . ",/home");
++
++// SESSIONS (e.g. 7200)
++$cookie_lifetime = "0";
++
++// TIMEZONE
++date_default_timezone_set("Europe/Belgrade");
++
++// External Authentification
++//define("AUTH_PATH", "/path/to/customauth.php");
++
++//////////////////////////////////////////////////////////////////
++// ** DO NOT EDIT CONFIG BELOW **
++//////////////////////////////////////////////////////////////////
++
++// PATHS
++define("COMPONENTS", BASE_PATH . "/components");
++define("PLUGINS", BASE_PATH . "/plugins");
++define("THEMES", BASE_PATH . "/themes");
++define("DATA", BASE_PATH . "/data");
++define("WORKSPACE", BASE_PATH . "/workspace");
++
++// URLS
++define("WSURL", BASE_URL . "/workspace");
++
++// Marketplace
++//define("MARKETURL", "http://market.codiad.com/json");
++
++// Update Check
++//define("UPDATEURL", "http://update.codiad.com/?v={VER}&o={OS}&p={PHP}&w={WEB}&a={ACT}");
++//define("ARCHIVEURL", "https://github.com/Codiad/Codiad/archive/master.zip");
++//define("COMMITURL", "https://api.github.com/repos/Codiad/Codiad/commits");
+diff -ruN ./codiad/data/settings.php ./patched/data/settings.php
+--- ./codiad/data/settings.php	1970-01-01 01:00:00.000000000 +0100
++++ ./patched/data/settings.php	2016-04-21 11:32:53.497619000 +0200
+@@ -0,0 +1 @@
++<?php/*|{"user":{"codiad.settings.system.sync":false,"codiad.settings.plugin.sync":false,"username":"user"}}|*/?>
+\ Nincs új sor a fájl végén
+diff -ruN ./codiad/index.php ./patched/index.php
+--- ./codiad/index.php	2016-04-25 09:33:19.401030000 +0200
++++ ./patched/index.php	2016-04-25 09:25:33.221018678 +0200
+@@ -1,6 +1,7 @@
+ <?php
+ 
+ require_once('common.php');
++require_once('./components/user/class.user.php');
+ 
+ // Context Menu
+ $context_menu = file_get_contents(COMPONENTS . "/filemanager/context_menu.json");
+@@ -119,55 +120,25 @@
+             // Installer
+             require_once('components/install/view.php');
+         }else{
+-            // Login form
+-            ?>
++        $User = new User();
++        $User->username = 'user';
++        $User->password = '12345';
++
++        // check if the asked languages exist and is registered in languages/code.php
++        require_once './languages/code.php';
++        if ( isset( $languages[ $_POST['language'] ] ) )
++            $User->lang = $_POST['language'];
++        else
++            $User->lang = 'en';
+ 
+-            <form id="login" method="post" style="position: fixed; width: 350px; top: 30%; left: 50%; margin-left: -175px; padding: 35px;">
++        // theme
++        $User->theme = $_POST['theme'];
+ 
+-                <label><span class="icon-user login-icon"></span> <?php i18n("Username"); ?></label>
+-                <input type="text" name="username" autofocus="autofocus" autocomplete="off">
+-
+-                <label><span class="icon-lock login-icon"></span> <?php i18n("Password"); ?></label>
+-                <input type="password" name="password">
+-                
+-                <div class="language-selector">
+-                    <label><span class="icon-picture login-icon"></span> <?php i18n("Theme"); ?></label>
+-                    <select name="theme" id="theme">
+-                        <option value="default"><?php i18n("Default"); ?></option>
+-                        <?php
+-                        include 'languages/code.php';
+-                        foreach($themes as $theme): 
+-                            if(file_exists(THEMES."/" . $theme . "/theme.json")) {
+-                                $data = file_get_contents(THEMES."/" . $theme . "/theme.json");
+-                                $data = json_decode($data,true);
+-                            ?>
+-                            <option value="<?php echo $theme; ?>" <?php if($theme == THEME) { echo "selected"; } ?>><?php if($data[0]['name'] != '') { echo $data[0]['name']; } else { echo $theme; } ?></option>
+-                        <?php } endforeach; ?>
+-                    </select>
+-                    <label><span class="icon-language login-icon"></span> <?php i18n("Language"); ?></label>
+-                    <select name="language" id="language">
+-                        <?php
+-                        include 'languages/code.php';
+-                        foreach(glob("languages/*.php") as $filename): 
+-                            $lang_code = str_replace(array("languages/", ".php"), "", $filename);
+-                            if(!isset($languages[$lang_code])) continue;
+-                            $lang_disp = ucfirst(strtolower($languages[$lang_code]));
+-                            ?>
+-                            <option value="<?php echo $lang_code; ?>" <?php if ($lang_code == "en"){echo "selected";}?>><?php echo $lang_disp; ?></option>
+-                        <?php endforeach; ?>
+-                    </select>
+-                </div>
+-                
+-                <button><?php i18n("Login"); ?></button>
+-
+-                <a class="show-language-selector"><?php i18n("More"); ?></a>
+-
+-            </form>
+-
+-            <script src="components/user/init.js"></script>
+-            <?php
++        $User->Authenticate();
+ 
+         }
++?>
++   <script>window.location.reload();</script><?php
+ 
+     //////////////////////////////////////////////////////////////////
+     // AUTHENTICATED
+@@ -424,6 +395,5 @@
+     }
+ 
+     ?>
+-
+ </body>
+ </html>

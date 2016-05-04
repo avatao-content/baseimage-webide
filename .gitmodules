@@ -1,0 +1,3 @@
+[submodule "var/www/codiad"]
+	path = var/www/codiad
+	url = https://github.com/Codiad/Codiad.git
