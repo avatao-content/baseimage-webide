@@ -37,7 +37,8 @@ RUN mkdir -p /var/cache/apache2 /var/run/apache2 /var/lock/apache2 /var/log/apac
 	&& rm /etc/nginx/conf.d/default.conf \
 	&& mkdir /etc/nginx/sites-enabled \
 	&& ln -s /etc/nginx/sites-available/codiad /etc/nginx/sites-enabled/codiad \
-	&& ln -s /etc/nginx/sites-available/server /etc/nginx/sites-enabled/server
+	&& ln -s /etc/nginx/sites-available/server /etc/nginx/sites-enabled/server \
+	&& git clone https://github.com/Andr3as/Codiad-CompletePlus.git /var/www/codiad/plugins/completeplus
 
 EXPOSE 8888
 
