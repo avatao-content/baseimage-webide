@@ -1,6 +1,6 @@
-diff -ruN ./codiad/common.php ./patched/common.php
---- ./codiad/common.php	2016-04-25 09:33:19.317030000 +0200
-+++ ./patched/common.php	2016-04-18 16:42:19.769638000 +0200
+diff -ruN oldcodiad/common.php codiad/common.php
+--- oldcodiad/common.php	2016-05-04 11:18:37.580414000 +0200
++++ codiad/common.php	2016-06-13 12:49:08.662880078 +0200
 @@ -83,7 +83,7 @@
              }
  
@@ -10,9 +10,30 @@ diff -ruN ./codiad/common.php ./patched/common.php
  
              session_start();
              
-diff -ruN ./codiad/components/editor/init.js ./patched/components/editor/init.js
---- ./codiad/components/editor/init.js	2016-04-25 09:33:19.393030000 +0200
-+++ ./patched/components/editor/init.js	2016-04-18 15:58:52.741570000 +0200
+diff -ruN oldcodiad/components/active/init.js codiad/components/active/init.js
+--- oldcodiad/components/active/init.js	2016-05-04 11:18:37.584414000 +0200
++++ codiad/components/active/init.js	2016-06-13 12:49:25.846852038 +0200
+@@ -259,17 +259,9 @@
+                     $.each(listResponse, function(index, data) {
+                         codiad.filemanager.openFile(data.path, data.focused);
+                     });
+-                    // Run resize command to fix render issues
+-                    codiad.editor.resize();
+                 }
+             });
+ 
+-            // Run resize on window resize
+-            $(window).resize(function() {
+-                codiad.editor.resize();
+-                _this.updateTabDropdownVisibility();
+-            });
+-
+             // Prompt if a user tries to close window without saving all filess
+             window.onbeforeunload = function(e) {
+                 if ($('#list-active-files li.changed')
+diff -ruN oldcodiad/components/editor/init.js codiad/components/editor/init.js
+--- oldcodiad/components/editor/init.js	2016-05-04 11:18:37.648414000 +0200
++++ codiad/components/editor/init.js	2016-06-13 12:49:08.662880078 +0200
 @@ -386,7 +386,7 @@
  
          // Settings for Editor instances
@@ -22,9 +43,9 @@ diff -ruN ./codiad/components/editor/init.js ./patched/components/editor/init.js
              fontSize: '13px',
              printMargin: false,
              highlightLine: true,
-diff -ruN ./codiad/components/right_bar.json ./patched/components/right_bar.json
---- ./codiad/components/right_bar.json	2016-04-25 09:33:19.397030000 +0200
-+++ ./patched/components/right_bar.json	2016-04-25 09:21:35.765012447 +0200
+diff -ruN oldcodiad/components/right_bar.json codiad/components/right_bar.json
+--- oldcodiad/components/right_bar.json	2016-05-04 11:18:37.652414000 +0200
++++ codiad/components/right_bar.json	2016-06-13 12:49:08.662880078 +0200
 @@ -12,87 +12,9 @@
          "onclick": "codiad.active.saveAll();"
      },
@@ -113,9 +134,9 @@ diff -ruN ./codiad/components/right_bar.json ./patched/components/right_bar.json
 -        "onclick": "codiad.user.logout();"
      }
  ]
-diff -ruN ./codiad/components/settings/settings.editor.php ./patched/components/settings/settings.editor.php
---- ./codiad/components/settings/settings.editor.php	2016-04-25 09:33:19.401030000 +0200
-+++ ./patched/components/settings/settings.editor.php	2016-04-18 16:10:27.173588000 +0200
+diff -ruN oldcodiad/components/settings/settings.editor.php codiad/components/settings/settings.editor.php
+--- oldcodiad/components/settings/settings.editor.php	2016-05-04 11:18:37.652414000 +0200
++++ codiad/components/settings/settings.editor.php	2016-06-13 12:49:08.666880071 +0200
 @@ -12,7 +12,7 @@
          
          <select class="setting" data-setting="codiad.editor.theme">
@@ -134,9 +155,9 @@ diff -ruN ./codiad/components/settings/settings.editor.php ./patched/components/
              <option value="vibrant_ink">Vibrant Ink</option>
  			<option value="xcode">XCode</option>
          </select>
-diff -ruN ./codiad/components/user/class.user.php ./patched/components/user/class.user.php
---- ./codiad/components/user/class.user.php	2016-04-25 09:33:19.401030000 +0200
-+++ ./patched/components/user/class.user.php	2016-04-21 11:32:16.177613000 +0200
+diff -ruN oldcodiad/components/user/class.user.php codiad/components/user/class.user.php
+--- oldcodiad/components/user/class.user.php	2016-05-04 11:18:37.652414000 +0200
++++ codiad/components/user/class.user.php	2016-06-13 12:49:08.666880071 +0200
 @@ -55,7 +55,7 @@
              }
          }
@@ -146,9 +167,9 @@ diff -ruN ./codiad/components/user/class.user.php ./patched/components/user/clas
          else{ echo formatJSEND("error","Incorrect Username or Password"); }
      }
  
-diff -ruN ./codiad/components/user/controller.php ./patched/components/user/controller.php
---- ./codiad/components/user/controller.php	2016-04-25 09:33:19.401030000 +0200
-+++ ./patched/components/user/controller.php	2016-04-18 16:18:26.053601000 +0200
+diff -ruN oldcodiad/components/user/controller.php codiad/components/user/controller.php
+--- oldcodiad/components/user/controller.php	2016-05-04 11:18:37.652414000 +0200
++++ codiad/components/user/controller.php	2016-06-13 12:49:08.666880071 +0200
 @@ -26,12 +26,9 @@
      //////////////////////////////////////////////////////////////////
  
@@ -164,9 +185,9 @@ diff -ruN ./codiad/components/user/controller.php ./patched/components/user/cont
  
          // check if the asked languages exist and is registered in languages/code.php
          require_once '../../languages/code.php';
-diff -ruN ./codiad/components/user/init.js ./patched/components/user/init.js
---- ./codiad/components/user/init.js	2016-04-25 09:33:19.401030000 +0200
-+++ ./patched/components/user/init.js	2016-04-18 17:31:29.073716000 +0200
+diff -ruN oldcodiad/components/user/init.js codiad/components/user/init.js
+--- oldcodiad/components/user/init.js	2016-05-04 11:18:37.652414000 +0200
++++ codiad/components/user/init.js	2016-06-13 12:49:08.666880071 +0200
 @@ -72,6 +72,7 @@
              });
          },
@@ -175,9 +196,9 @@ diff -ruN ./codiad/components/user/init.js ./patched/components/user/init.js
          //////////////////////////////////////////////////////////////////
          // Logout
          //////////////////////////////////////////////////////////////////
-diff -ruN ./codiad/config.php ./patched/config.php
---- ./codiad/config.php	1970-01-01 01:00:00.000000000 +0100
-+++ ./patched/config.php	2016-04-21 14:55:48.082760000 +0200
+diff -ruN oldcodiad/config.php codiad/config.php
+--- oldcodiad/config.php	1970-01-01 01:00:00.000000000 +0100
++++ codiad/config.php	2016-06-13 12:49:08.666880071 +0200
 @@ -0,0 +1,54 @@
 +<?php
 +
@@ -233,15 +254,15 @@ diff -ruN ./codiad/config.php ./patched/config.php
 +//define("UPDATEURL", "http://update.codiad.com/?v={VER}&o={OS}&p={PHP}&w={WEB}&a={ACT}");
 +//define("ARCHIVEURL", "https://github.com/Codiad/Codiad/archive/master.zip");
 +//define("COMMITURL", "https://api.github.com/repos/Codiad/Codiad/commits");
-diff -ruN ./codiad/data/settings.php ./patched/data/settings.php
---- ./codiad/data/settings.php	1970-01-01 01:00:00.000000000 +0100
-+++ ./patched/data/settings.php	2016-04-21 11:32:53.497619000 +0200
+diff -ruN oldcodiad/data/settings.php codiad/data/settings.php
+--- oldcodiad/data/settings.php	1970-01-01 01:00:00.000000000 +0100
++++ codiad/data/settings.php	2016-06-13 12:49:08.666880071 +0200
 @@ -0,0 +1 @@
 +<?php/*|{"user":{"codiad.settings.system.sync":false,"codiad.settings.plugin.sync":false,"username":"user"}}|*/?>
 \ Nincs új sor a fájl végén
-diff -ruN ./codiad/index.php ./patched/index.php
---- ./codiad/index.php	2016-04-25 09:33:19.401030000 +0200
-+++ ./patched/index.php	2016-04-25 09:25:33.221018678 +0200
+diff -ruN oldcodiad/index.php codiad/index.php
+--- oldcodiad/index.php	2016-05-04 11:18:37.652414000 +0200
++++ codiad/index.php	2016-06-13 12:49:08.666880071 +0200
 @@ -1,6 +1,7 @@
  <?php
  
@@ -328,3 +349,16 @@ diff -ruN ./codiad/index.php ./patched/index.php
 -
  </body>
  </html>
+diff -ruN oldcodiad/js/system.js codiad/js/system.js
+--- oldcodiad/js/system.js	2016-05-04 11:18:37.656414000 +0200
++++ codiad/js/system.js	2016-06-13 12:49:41.814826563 +0200
+@@ -91,6 +91,9 @@
+                     .outerHeight() - 60) + 'px' // TODO Adjust '75' in function of the final tabs height.
+             });
+ 
++            // Run resize command to fix render issues
++            codiad.editor.resize();
++            codiad.active.updateTabDropdownVisibility();
+         });
+ 
+         $('#settings').click(function(){
