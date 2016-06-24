@@ -1,6 +1,6 @@
 diff -ruN oldcodiad/common.php codiad/common.php
---- oldcodiad/common.php	2016-05-04 11:18:37.580414000 +0200
-+++ codiad/common.php	2016-06-13 12:49:08.662880078 +0200
+--- oldcodiad/common.php	2016-05-04 13:18:36.000000000 +0200
++++ codiad/common.php	2016-06-13 14:49:08.000000000 +0200
 @@ -83,7 +83,7 @@
              }
  
@@ -11,8 +11,8 @@ diff -ruN oldcodiad/common.php codiad/common.php
              session_start();
              
 diff -ruN oldcodiad/components/active/init.js codiad/components/active/init.js
---- oldcodiad/components/active/init.js	2016-05-04 11:18:37.584414000 +0200
-+++ codiad/components/active/init.js	2016-06-13 12:49:25.846852038 +0200
+--- oldcodiad/components/active/init.js	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/active/init.js	2016-06-13 14:49:24.000000000 +0200
 @@ -259,17 +259,9 @@
                      $.each(listResponse, function(index, data) {
                          codiad.filemanager.openFile(data.path, data.focused);
@@ -32,8 +32,8 @@ diff -ruN oldcodiad/components/active/init.js codiad/components/active/init.js
              window.onbeforeunload = function(e) {
                  if ($('#list-active-files li.changed')
 diff -ruN oldcodiad/components/editor/init.js codiad/components/editor/init.js
---- oldcodiad/components/editor/init.js	2016-05-04 11:18:37.648414000 +0200
-+++ codiad/components/editor/init.js	2016-06-13 12:49:08.662880078 +0200
+--- oldcodiad/components/editor/init.js	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/editor/init.js	2016-06-13 14:49:08.000000000 +0200
 @@ -386,7 +386,7 @@
  
          // Settings for Editor instances
@@ -43,9 +43,20 @@ diff -ruN oldcodiad/components/editor/init.js codiad/components/editor/init.js
              fontSize: '13px',
              printMargin: false,
              highlightLine: true,
+diff -ruN oldcodiad/components/fileext_textmode/class.fileextension_textmode.php codiad/components/fileext_textmode/class.fileextension_textmode.php
+--- oldcodiad/components/fileext_textmode/class.fileextension_textmode.php	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/fileext_textmode/class.fileextension_textmode.php	2016-06-24 15:48:39.715188539 +0200
+@@ -36,6 +36,7 @@
+ 			'cpp' => 'c_cpp',
+ 			'h' => 'c_cpp',
+ 			'hpp' => 'c_cpp',
++			'cs' => 'csharp',
+ 			'py' => 'python',
+ 			'rb' => 'ruby',
+ 			'erb' => 'html_ruby',
 diff -ruN oldcodiad/components/right_bar.json codiad/components/right_bar.json
---- oldcodiad/components/right_bar.json	2016-05-04 11:18:37.652414000 +0200
-+++ codiad/components/right_bar.json	2016-06-13 12:49:08.662880078 +0200
+--- oldcodiad/components/right_bar.json	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/right_bar.json	2016-06-13 14:49:08.000000000 +0200
 @@ -12,87 +12,9 @@
          "onclick": "codiad.active.saveAll();"
      },
@@ -135,8 +146,8 @@ diff -ruN oldcodiad/components/right_bar.json codiad/components/right_bar.json
      }
  ]
 diff -ruN oldcodiad/components/settings/settings.editor.php codiad/components/settings/settings.editor.php
---- oldcodiad/components/settings/settings.editor.php	2016-05-04 11:18:37.652414000 +0200
-+++ codiad/components/settings/settings.editor.php	2016-06-13 12:49:08.666880071 +0200
+--- oldcodiad/components/settings/settings.editor.php	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/settings/settings.editor.php	2016-06-13 14:49:08.000000000 +0200
 @@ -12,7 +12,7 @@
          
          <select class="setting" data-setting="codiad.editor.theme">
@@ -156,8 +167,8 @@ diff -ruN oldcodiad/components/settings/settings.editor.php codiad/components/se
  			<option value="xcode">XCode</option>
          </select>
 diff -ruN oldcodiad/components/user/class.user.php codiad/components/user/class.user.php
---- oldcodiad/components/user/class.user.php	2016-05-04 11:18:37.652414000 +0200
-+++ codiad/components/user/class.user.php	2016-06-13 12:49:08.666880071 +0200
+--- oldcodiad/components/user/class.user.php	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/user/class.user.php	2016-06-13 14:49:08.000000000 +0200
 @@ -55,7 +55,7 @@
              }
          }
@@ -168,8 +179,8 @@ diff -ruN oldcodiad/components/user/class.user.php codiad/components/user/class.
      }
  
 diff -ruN oldcodiad/components/user/controller.php codiad/components/user/controller.php
---- oldcodiad/components/user/controller.php	2016-05-04 11:18:37.652414000 +0200
-+++ codiad/components/user/controller.php	2016-06-13 12:49:08.666880071 +0200
+--- oldcodiad/components/user/controller.php	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/user/controller.php	2016-06-13 14:49:08.000000000 +0200
 @@ -26,12 +26,9 @@
      //////////////////////////////////////////////////////////////////
  
@@ -186,8 +197,8 @@ diff -ruN oldcodiad/components/user/controller.php codiad/components/user/contro
          // check if the asked languages exist and is registered in languages/code.php
          require_once '../../languages/code.php';
 diff -ruN oldcodiad/components/user/init.js codiad/components/user/init.js
---- oldcodiad/components/user/init.js	2016-05-04 11:18:37.652414000 +0200
-+++ codiad/components/user/init.js	2016-06-13 12:49:08.666880071 +0200
+--- oldcodiad/components/user/init.js	2016-05-04 13:18:36.000000000 +0200
++++ codiad/components/user/init.js	2016-06-13 14:49:08.000000000 +0200
 @@ -72,6 +72,7 @@
              });
          },
@@ -198,7 +209,7 @@ diff -ruN oldcodiad/components/user/init.js codiad/components/user/init.js
          //////////////////////////////////////////////////////////////////
 diff -ruN oldcodiad/config.php codiad/config.php
 --- oldcodiad/config.php	1970-01-01 01:00:00.000000000 +0100
-+++ codiad/config.php	2016-06-13 12:49:08.666880071 +0200
++++ codiad/config.php	2016-06-13 14:49:08.000000000 +0200
 @@ -0,0 +1,54 @@
 +<?php
 +
@@ -256,13 +267,13 @@ diff -ruN oldcodiad/config.php codiad/config.php
 +//define("COMMITURL", "https://api.github.com/repos/Codiad/Codiad/commits");
 diff -ruN oldcodiad/data/settings.php codiad/data/settings.php
 --- oldcodiad/data/settings.php	1970-01-01 01:00:00.000000000 +0100
-+++ codiad/data/settings.php	2016-06-13 12:49:08.666880071 +0200
++++ codiad/data/settings.php	2016-06-13 14:49:08.000000000 +0200
 @@ -0,0 +1 @@
 +<?php/*|{"user":{"codiad.settings.system.sync":false,"codiad.settings.plugin.sync":false,"username":"user"}}|*/?>
 \ Nincs új sor a fájl végén
 diff -ruN oldcodiad/index.php codiad/index.php
---- oldcodiad/index.php	2016-05-04 11:18:37.652414000 +0200
-+++ codiad/index.php	2016-06-13 12:49:08.666880071 +0200
+--- oldcodiad/index.php	2016-05-04 13:18:36.000000000 +0200
++++ codiad/index.php	2016-06-13 14:49:08.000000000 +0200
 @@ -1,6 +1,7 @@
  <?php
  
@@ -350,8 +361,8 @@ diff -ruN oldcodiad/index.php codiad/index.php
  </body>
  </html>
 diff -ruN oldcodiad/js/system.js codiad/js/system.js
---- oldcodiad/js/system.js	2016-05-04 11:18:37.656414000 +0200
-+++ codiad/js/system.js	2016-06-13 12:49:41.814826563 +0200
+--- oldcodiad/js/system.js	2016-05-04 13:18:36.000000000 +0200
++++ codiad/js/system.js	2016-06-13 14:49:40.000000000 +0200
 @@ -91,6 +91,9 @@
                      .outerHeight() - 60) + 'px' // TODO Adjust '75' in function of the final tabs height.
              });
