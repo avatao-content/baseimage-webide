@@ -1,6 +1,7 @@
 import fnmatch
 import os
 import sys
+import shutil
 
 
 dir = "/var/www/codiad"
@@ -9,7 +10,7 @@ workdir = ""
 file_to_edit = ""
 
 
-if len(sys.argv) == 3:
+if len(sys.argv) >= 3:
 	workdir = sys.argv[1]
 	file_to_edit = sys.argv[2]
 	if not os.path.exists(workdir):
@@ -60,6 +61,18 @@ if len(sys.argv) == 3:
 	except Exception as e:
 		print("[ERROR] " + str(e) + "\n")
 
+	try:
+		if not sys.argv[3] == "-t":
+			print("[ERROR] Invalid parameter: " + sys.argv[3])
+			raise Exception('Catch me!')
+		else:
+			print("[INFO] Terminal is ENABLED")
+	except Exception as e:
+		shutil.rmtree('/var/www/codiad/plugins/terminal')
+		print("[INFO] Terminal is DISABLED")
+		
+
 else:
-	print("Usage: python3 setup.py workdir file_to_edit")
+	print("Usage        : python3 setup.py PATH/OF/WORKING/DIRECTORY PATH/OF/FILE/TO/EDIT.TXT")
+	print("With terminal: python3 setup.py PATH/OF/WORKING/DIRECTORY PATH/OF/FILE/TO/EDIT.TXT -t")
 

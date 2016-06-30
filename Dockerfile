@@ -38,8 +38,22 @@ RUN mkdir -p /var/cache/apache2 /var/run/apache2 /var/lock/apache2 /var/log/apac
 	&& mkdir /etc/nginx/sites-enabled \
 	&& ln -s /etc/nginx/sites-available/codiad /etc/nginx/sites-enabled/codiad \
 	&& ln -s /etc/nginx/sites-available/server /etc/nginx/sites-enabled/server \
-	&& git clone https://github.com/Andr3as/Codiad-CompletePlus.git /var/www/codiad/plugins/completeplus
+	&& git clone https://github.com/Andr3as/Codiad-CompletePlus.git /var/www/codiad/plugins/completeplus \
+	&& cd /var/www \ 
+	&& patch -p0 -f < /var/www/codiad.patch \
+	&& cp -r /var/www/terminal /var/www/codiad/plugins/terminal \
+	&& find /var/www/codiad -type f -exec chmod 664 {} +
 
 EXPOSE 8888
 
 CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+
+RUN python3 /opt/setup.py /var/www/server /var/www/server/index.php \ 
+    && chown -R user:user /var/www
+VOLUME ["/tmp", "/var/log", "/var/lib/php5", "/var/www/server"]
+VOLUME ["/var/www/codiad/data", "/var/www/codiad/plugins", "/var/www/codiad/themes", "/var/www/codiad/workspace"]
+VOLUME ["/var/cache/apache2", "/var/run/apache2", "/var/lock/apache2"]
+VOLUME ["/var/lib/mysql", "/var/run/mysqld"]
+USER user
+EXPOSE 8008
+CMD ["supervisord", "-c", "/etc/supervisor/apache-mysql.conf"]

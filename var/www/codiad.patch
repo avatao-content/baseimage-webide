@@ -10,27 +10,7 @@ diff -ruN oldcodiad/common.php codiad/common.php
  
              session_start();
              
-diff -ruN oldcodiad/components/active/init.js codiad/components/active/init.js
---- oldcodiad/components/active/init.js	2016-05-04 13:18:36.000000000 +0200
-+++ codiad/components/active/init.js	2016-06-13 14:49:24.000000000 +0200
-@@ -259,17 +259,9 @@
-                     $.each(listResponse, function(index, data) {
-                         codiad.filemanager.openFile(data.path, data.focused);
-                     });
--                    // Run resize command to fix render issues
--                    codiad.editor.resize();
-                 }
-             });
- 
--            // Run resize on window resize
--            $(window).resize(function() {
--                codiad.editor.resize();
--                _this.updateTabDropdownVisibility();
--            });
--
-             // Prompt if a user tries to close window without saving all filess
-             window.onbeforeunload = function(e) {
-                 if ($('#list-active-files li.changed')
+
 diff -ruN oldcodiad/components/editor/init.js codiad/components/editor/init.js
 --- oldcodiad/components/editor/init.js	2016-05-04 13:18:36.000000000 +0200
 +++ codiad/components/editor/init.js	2016-06-13 14:49:08.000000000 +0200
@@ -57,7 +37,7 @@ diff -ruN oldcodiad/components/fileext_textmode/class.fileextension_textmode.php
 diff -ruN oldcodiad/components/right_bar.json codiad/components/right_bar.json
 --- oldcodiad/components/right_bar.json	2016-05-04 13:18:36.000000000 +0200
 +++ codiad/components/right_bar.json	2016-06-13 14:49:08.000000000 +0200
-@@ -12,87 +12,9 @@
+@@ -12,87 +12,15 @@
          "onclick": "codiad.active.saveAll();"
      },
      {
@@ -67,12 +47,12 @@ diff -ruN oldcodiad/components/right_bar.json codiad/components/right_bar.json
 -        "onclick": null
 -    },
 -    {
--        "title": "pluginbar",
--        "admin": false,
--        "icon": null,
--        "onclick": null
--    },
--    {
+         "title": "pluginbar",
+         "admin": false,
+         "icon": null,
+         "onclick": null
+     },
+     {
 -        "title": "Administration",
 -        "admin": true,
 -        "icon": null,
@@ -196,17 +176,7 @@ diff -ruN oldcodiad/components/user/controller.php codiad/components/user/contro
  
          // check if the asked languages exist and is registered in languages/code.php
          require_once '../../languages/code.php';
-diff -ruN oldcodiad/components/user/init.js codiad/components/user/init.js
---- oldcodiad/components/user/init.js	2016-05-04 13:18:36.000000000 +0200
-+++ codiad/components/user/init.js	2016-06-13 14:49:08.000000000 +0200
-@@ -72,6 +72,7 @@
-             });
-         },
- 
-+
-         //////////////////////////////////////////////////////////////////
-         // Logout
-         //////////////////////////////////////////////////////////////////
+
 diff -ruN oldcodiad/config.php codiad/config.php
 --- oldcodiad/config.php	1970-01-01 01:00:00.000000000 +0100
 +++ codiad/config.php	2016-06-13 14:49:08.000000000 +0200
@@ -360,16 +330,3 @@ diff -ruN oldcodiad/index.php codiad/index.php
 -
  </body>
  </html>
-diff -ruN oldcodiad/js/system.js codiad/js/system.js
---- oldcodiad/js/system.js	2016-05-04 13:18:36.000000000 +0200
-+++ codiad/js/system.js	2016-06-13 14:49:40.000000000 +0200
-@@ -91,6 +91,9 @@
-                     .outerHeight() - 60) + 'px' // TODO Adjust '75' in function of the final tabs height.
-             });
- 
-+            // Run resize command to fix render issues
-+            codiad.editor.resize();
-+            codiad.active.updateTabDropdownVisibility();
-         });
- 
-         $('#settings').click(function(){
