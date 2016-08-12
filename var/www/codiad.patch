@@ -26,11 +26,12 @@ diff -ruN oldcodiad/components/editor/init.js codiad/components/editor/init.js
 diff -ruN oldcodiad/components/fileext_textmode/class.fileextension_textmode.php codiad/components/fileext_textmode/class.fileextension_textmode.php
 --- oldcodiad/components/fileext_textmode/class.fileextension_textmode.php	2016-05-04 13:18:36.000000000 +0200
 +++ codiad/components/fileext_textmode/class.fileextension_textmode.php	2016-06-24 15:48:39.715188539 +0200
-@@ -36,6 +36,7 @@
+@@ -36,6 +36,8 @@
  			'cpp' => 'c_cpp',
  			'h' => 'c_cpp',
  			'hpp' => 'c_cpp',
 +			'cs' => 'csharp',
++			'java' => 'java',
  			'py' => 'python',
  			'rb' => 'ruby',
  			'erb' => 'html_ruby',
