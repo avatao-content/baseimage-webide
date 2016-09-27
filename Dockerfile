@@ -1,4 +1,4 @@
-FROM avatao/ubuntu:14.04
+FROM avatao/ubuntu:16.04
 
 ENV TERM dumb
 ENV NGINX_VERSION 1.8.1-1~trusty
